@@ -1,0 +1,14 @@
+<h1>Your Verify Code:</h1>
+<h2 id="code"></h2>
+
+<script>
+function generateCode() {
+  return "GEO-" + Math.floor(1000 + Math.random() * 9000);
+}
+
+const code = generateCode();
+document.getElementById("code").innerText = code;
+
+// Save it so user can copy later
+localStorage.setItem("verifyCode", code);
+</script>

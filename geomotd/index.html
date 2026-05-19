@@ -37,13 +37,16 @@
 
   <h3 id="dateLabel"></h3>
 
-  <img id="meme">
+  <img id="meme" alt="making meme">
 
   <script>
 
     // meme image list
+    const lib = "imgLib/"
     const memes = [
-      "imgLib/images.jpeg"
+      lib + "images.jpeg",
+      lib + "again.jpg",
+      lib + "anxiety.jpg"
     ];
 
     // get today's date
@@ -64,7 +67,7 @@
 
     // generate daily seed
     const seed =
-      today.getFullYear() * 1000 +
+      today.getFullYear() * 10000 +
       today.getMonth() * 100 +
       today.getDate();
 

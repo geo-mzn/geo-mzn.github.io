@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>/* Base setup */
+  <style>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -100,10 +100,14 @@ button:hover, a:hover {
   <script>
 function downloadWindows() {
   window.location.href = "windows.zip";
-}
+},
+    function downloadMobile() {
+      window.location.href = "mobile.zip"
+    }
 </script>
 
   <button onclick="downloadWindows()">Download for Windows (x64)</button>
+  <button onclick="downloadMobile">Download for PsychEngine Mobile</button>
 
 </body>
 </html>

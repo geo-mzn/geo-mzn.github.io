@@ -41,7 +41,7 @@
   Commands
 </button>
 
-<textarea id="input"></textarea>
+<textarea id="input" placeholder='Type Code Here...'></textarea>
 
 <button onclick="runCompile()">
 Compile
@@ -138,70 +138,17 @@ function compile(code) {
 
       let duration = parts[4]
       const amplifier = parts[5]
-      const particles = parts[6]
+      let particles = parts[6]
 
-      if (duration === "infinite") {
-        duration = "infinite"
+      if (particles === undefined) {
+        particles = "false"
       }
 
       output.push(
         `effect give ${target} ${effect} ${duration} ${amplifier} ${particles}`
       )
     }
-
-    // IF STATEMENTS
-    else if (cmd === "if") {
-      const variable = parts[1]
-      const operator = parts[2]
-      const compareValue = parts[3]
-
-      const variableValue = variables[variable]
-
-      let passed = false
-
-      if (operator === ">=") {
-        passed = Number(variableValue) >= Number(compareValue)
-      }
-
-      if (operator === "<=") {
-        passed = Number(variableValue) <= Number(compareValue)
-      }
-
-      if (operator === "==") {
-        passed = variableValue == compareValue
-      }
-
-      if (passed) {
-        i++
-
-        while (
-          i < lines.length &&
-          lines[i].trim() !== "end"
-        ) {
-          const nested = lines[i]
-
-          output.push(
-            compile(nested)
-          )
-
-          i++
-        }
-      }
-      else {
-        while (
-          i < lines.length &&
-          lines[i].trim() !== "end"
-        ) {
-          i++
-        }
-      }
-    }
-
-    else {
-      output.push(`# unknown command: ${cmd}`)
-    }
   }
-
   return output.join("\n")
 }
 

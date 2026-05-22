@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Geo's Better MCF</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #111827;
+      color: white;
+      padding: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 250px;
+      background: #1f2937;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-family: monospace;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    pre {
+      background: #1f2937;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Geo's Better MCF</h1>
+
+<textarea id="input"></textarea>
+
+<button onclick="runCompile()">
+Compile
+</button>
+
+<h2>Compiled Output</h2>
+
+  <pre id="output"></pre>
+
+  <button onclick="getCode()">Copy Code</button>
+  
+<script>
+const variables = {}
+
+function tokenize(line) {
+  return line.match(/"[^"]*"|\S+/g) || []
+}
+
+function compile(code) {
+  const lines = code.split("\n")
+  const output = []
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim()
+
+    if (!line) continue
+
+    // comments
+    if (line.startsWith("#")) continue
+
+    const parts = tokenize(line)
+
+    const cmd = parts[0]
+    
+    // VARIABLES
+    if (cmd === "store") {
+      const name = parts[1]
+      const value = parts[3]
+
+      variables[name] = value
+
+      output.push(`# stored ${name} = ${value}`)
+    }
+      // ANNJSON
+    else if (cmd === "annjson") {
+    const target = parts[1]
+
+    const json = parts
+    .slice(2)
+    .join(" ")
+
+    output.push(
+    `tellraw ${target} ${json}`
+  )
+}
+          
+    // ANNOUNCE
+    else if (cmd === "announce") {
+      const msg = parts
+        .slice(1)
+        .join(" ")
+        .replace(/^"|"$/g, "")
+
+      output.push(`say ${msg}`)
+    }
+
+    // MOVE
+    else if (cmd === "move") {
+      const target = parts[1]
+      const x = parts[2]
+      const y = parts[3]
+      const z = parts[4]
+
+      output.push(`tp ${target} ${x} ${y} ${z}`)
+    }
+
+    // EFFECT CLEAR
+    else if (
+      cmd === "effect" &&
+      parts[2] === "clear"
+    ) {
+      const target = parts[1]
+
+      output.push(`effect clear ${target}`)
+    }
+
+    // EFFECT ADD
+    else if (
+      cmd === "effect" &&
+      parts[2] === "add"
+    ) {
+      const target = parts[1]
+      const effect = parts[3]
+
+      let duration = parts[4]
+      const amplifier = parts[5]
+      const particles = parts[6]
+
+      if (duration === "infinite") {
+        duration = "infinite"
+      }
+
+      output.push(
+        `effect give ${target} ${effect} ${duration} ${amplifier} ${particles}`
+      )
+    }
+
+    // IF STATEMENTS
+    else if (cmd === "if") {
+      const variable = parts[1]
+      const operator = parts[2]
+      const compareValue = parts[3]
+
+      const variableValue = variables[variable]
+
+      let passed = false
+
+      if (operator === ">=") {
+        passed = Number(variableValue) >= Number(compareValue)
+      }
+
+      if (operator === "<=") {
+        passed = Number(variableValue) <= Number(compareValue)
+      }
+
+      if (operator === "==") {
+        passed = variableValue == compareValue
+      }
+
+      if (passed) {
+        i++
+
+        while (
+          i < lines.length &&
+          lines[i].trim() !== "end"
+        ) {
+          const nested = lines[i]
+
+          output.push(
+            compile(nested)
+          )
+
+          i++
+        }
+      }
+      else {
+        while (
+          i < lines.length &&
+          lines[i].trim() !== "end"
+        ) {
+          i++
+        }
+      }
+    }
+
+    else {
+      output.push(`# unknown command: ${cmd}`)
+    }
+  }
+
+  return output.join("\n")
+}
+
+function runCompile() {
+  const code =
+    document.getElementById("input").value
+
+  const compiled = compile(code)
+
+  document.getElementById("output").textContent =
+    compiled
+}
+  function getCode() {
+  const copy =
+    document.getElementById("output").textContent
+
+  if (copy === "") {
+    alert("No code compiled!")
+  }
+  else {
+    navigator.clipboard.writeText(copy)
+
+    alert("Copied!")
+  }
+}
+  window.runCompile = runCompile
+  window.getCode = getCode
+</script>
+
+</body>
+</html>

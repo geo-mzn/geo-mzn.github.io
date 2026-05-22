@@ -37,7 +37,9 @@
 
 <body>
 
-<h1>Geo's Better MCF</h1>
+<h1>Geo's Better MCF</h1> <button onclick="openCmds()">
+  Commands
+</button>
 
 <textarea id="input"></textarea>
 
@@ -224,6 +226,9 @@ function runCompile() {
 
     alert("Copied!")
   }
+}
+  function openCmds() {
+  window.location.href = "cmds.html"
 }
   window.runCompile = runCompile
   window.getCode = getCode

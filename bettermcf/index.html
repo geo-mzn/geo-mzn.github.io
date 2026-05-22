@@ -188,7 +188,7 @@ function compile(code) {
     range = `${comp}..`
   }
 
-  else if (operator === "<=") {
+  else if (operator === "=<") {
     range = `..${comp}`
   }
 
@@ -224,7 +224,7 @@ function compile(code) {
 }
       else {
         output.push(
-          `SYNTAX ERROR: ${cmd}`
+          `SYNTAX ERROR: ${line}`
         )
       }
   }

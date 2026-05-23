@@ -40,13 +40,12 @@
 <div>
   <h1 style="text-align:center;">
   Geo's Better MCF
-  </h1> 
-  <div style="text-align:left;">
-    <button onclick="openCmds()">
+  </h1>
+  <button onclick="openCmds()">
       Commands
     </button>
-  </div>
 </div>
+  <div id="fileNameDisplay"></div>
 
 <textarea id="input" placeholder='Type Code Here...'></textarea>
 
@@ -61,6 +60,7 @@ Compile
   <div style="text-align:center;"><button onclick="getCode()">Copy Code</button></div>
 
   <div style="text-align:center;">
+    <h2>Export/Import Options</h2><br>
     <button onclick="openFile()">Open .gbmcf</button>
     <button onclick="saveFile()">Save as .gbmcf</button>
     <button onclick="saveMcf()">Save as .mcfunction</button>

@@ -37,14 +37,16 @@
 
 <body>
 
-<h1 style="text-align:center;">
+<div>
+  <h1 style="text-align:center;">
   Geo's Better MCF
-</h1> 
+  </h1> 
   <div style="text-align:left;">
     <button onclick="openCmds()">
       Commands
     </button>
   </div>
+</div>
 
 <textarea id="input" placeholder='Type Code Here...'></textarea>
 
@@ -57,6 +59,11 @@ Compile
   <pre id="output">Type code above for an output.</pre>
 
   <div style="text-align:center;"><button onclick="getCode()">Copy Code</button></div>
+
+  <div style="text-align:center;">
+    <button onclick="openFile()">Open .gbmcf</button>
+    <button onclick="saveFile()">Save .gbmcf</button>
+  </div>
 <script>
 
 function tokenize(line) {
@@ -284,6 +291,43 @@ function runCompile() {
 }
   function openCmds() {
   window.location.href = "cmds.html"
+}
+  async function openFile() {
+  const [fileHandle] = await window.showOpenFilePicker({
+    types: [{
+      description: "GBMCF Files",
+      accept: {
+        "text/plain": [".gbmcf"]
+      }
+    }]
+  })
+
+  const file = await fileHandle.getFile()
+  const text = await file.text()
+
+  document.getElementById("input").value = text
+}
+
+async function saveFile() {
+  const text =
+    document.getElementById("input").value
+
+  const fileHandle =
+    await window.showSaveFilePicker({
+      suggestedName: "project.gbmcf",
+      types: [{
+        description: "GBMCF Files",
+        accept: {
+          "text/plain": [".gbmcf"]
+        }
+      }]
+    })
+
+  const writable =
+    await fileHandle.createWritable()
+
+  await writable.write(text)
+  await writable.close()
 }
   window.runCompile = runCompile
   window.getCode = getCode

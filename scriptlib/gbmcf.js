@@ -206,6 +206,7 @@ function runCompile() {
 
   document.getElementById("output").textContent =
     compiled
+  alert('Thank you for using GBMCF!')
 }
   function getCode() {
   const copy =
@@ -250,6 +251,7 @@ async function saveFile() {
         }
       }]
     })
+    alert('Thank you for using GBMCF!')
 
   const writable =
     await fileHandle.createWritable()
@@ -277,6 +279,7 @@ async function saveMcf() {
         }
       }]
     })
+    alert('Thank you for using GBMCF!')
 
   const writable =
     await fileHandle.createWritable()

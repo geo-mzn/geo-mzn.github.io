@@ -258,9 +258,15 @@ async function saveFile() {
   await writable.close()
 }
 async function saveMcf() {
+  const code =
+    document.getElementById("input").value
+  const compiled = compile(code)
   const text =
     document.getElementById("output").textContent
 
+  document.getElementById("output").textContent =
+    compiled
+  
   const fileHandle =
     await window.showSaveFilePicker({
       suggestedName: "gmbcf-generated.mcfunction",

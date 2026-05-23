@@ -260,3 +260,5 @@ async function saveFile() {
 }
   window.runCompile = runCompile
   window.getCode = getCode
+window.openFile = openFile
+window.saveFile = saveFile

@@ -243,7 +243,7 @@ async function saveFile() {
 
   const fileHandle =
     await window.showSaveFilePicker({
-      suggestedName: "project.gbmcf",
+      suggestedName: "gbmcf-generated.gbmcf",
       types: [{
         description: "GBMCF Files",
         accept: {
@@ -271,7 +271,7 @@ async function saveMcf() {
   
   const fileHandle =
     await window.showSaveFilePicker({
-      suggestedName: "gmbcf-generated.mcfunction",
+      suggestedName: "gbmcf-generated.mcfunction",
       types: [{
         description: "MCfunction Files",
         accept: {

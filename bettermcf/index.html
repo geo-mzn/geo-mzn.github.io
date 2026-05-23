@@ -4,14 +4,6 @@
   <title>Geo's Better MCF</title>
 
   <style>
-    .modembed {
-      visibility: hidden;
-      background: #111827;
-      color: white;
-      padding: 8px, 12px;
-      border-radius: 8px;
-      
-    }
     body {
       font-family: Arial;
       background: #111827;
@@ -45,27 +37,35 @@
 
 <body>
 
-<h1 text-align="center";>Geo's Better MCF</h1> <button onclick="openCmds()" text-align="left">
-  Commands
-</button>
+<h1 style="text-align:center;">
+  Geo's Better MCF
+</h1> 
+  <div style="text-align:left;">
+    <button onclick="openCmds()">
+      Commands
+    </button>
+  </div>
 
 <textarea id="input" placeholder='Type Code Here...'></textarea>
 
-<button onclick="runCompile()" text-align="center">
+<div style="text-align:center;"><button onclick="runCompile()">
 Compile
-</button>
+</button></div>
 
-<h2 text-align="center">Compiled Output</h2>
+<h2 style="text-align:center;">Compiled Output</h2>
 
   <pre id="output">Type code above for an output.</pre>
 
-  <button onclick="getCode()" text-align="center">Copy Code</button>
+  <div style="text-align:center;"><button onclick="getCode()">Copy Code</button></div>
   <br>
   <br>
-  <a href="https://gamebanana.com/mods/679156" title="GBMCF on Gamebanana!"><img src="https://gamebanana.com/mods/embeddables/679156?type=large"/></a>
+  <div style="text-align:center;">
+    <a href="https://gamebanana.com/mods/679156" title="GBMCF on Gamebanana!">
+    <img src="https://gamebanana.com/mods/embeddables/679156?type=large"/>
+  </a>
+  </div>
   
 <script>
-const variables = {}
 
 function tokenize(line) {
   return line.match(/"[^"]*"|\S+/g) || []
@@ -128,6 +128,31 @@ function compile(code) {
 
       output.push(`tellraw ${target} ${json}`)
 }
+      // place
+      else if (cmd === "place") {
+        const x = parts[1]
+        const y = parts[2]
+        const z = parts[3]
+        const block = parts[4]
+
+        if (parts.length < 5) {
+          output.push(`SYNTAX ERROR: place`)
+          continue
+      }
+          output.push(`setblock ${x} ${y} ${z} ${block}`)
+      }
+        // destroy
+        else if (cmd === "destroy") {
+          const x = parts[1]
+          const y = parts[2]
+          const z = parts[3]
+
+          if (parts.length < 4) {
+            output.push(`SYNTAX ERROR: destroy`)
+            continue
+          }
+            output.push(`setblock ${x} ${y} ${z} air`)
+        }
           
     // ANNOUNCE
     else if (cmd === "announce") {
@@ -184,6 +209,7 @@ function compile(code) {
         `effect give ${target} ${effect} ${duration} ${amplifier} ${particles}`
       )
     }
+      // if
       else if (cmd === "if") {
   const varname = parts[1]
   const operator = parts[2]
@@ -199,13 +225,13 @@ function compile(code) {
     range = `${comp}..`
   }
 
-  else if (operator === "=<") {
+  else if (operator === "<=") {
     range = `..${comp}`
   }
 
-  else if (operator === "==") {
+  else if (operator === "==" || operator === "=") {
     range = comp
-  } if (!mccmd) {
+  } if (!mccmd || parts.length < 6) {
     output.push(`SYNTAX ERROR: if`)
   } else {
   output.push(

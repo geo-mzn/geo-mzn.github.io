@@ -206,7 +206,6 @@ function runCompile() {
 
   document.getElementById("output").textContent =
     compiled
-  alert('Thank you for using GBMCF!')
 }
   function getCode() {
   const copy =
@@ -222,6 +221,7 @@ function runCompile() {
   }
 }
   async function openFile() {
+    const fileinfo = document.getElementById("fileNameDisplay")
   const [fileHandle] = await window.showOpenFilePicker({
     types: [{
       description: "GBMCF Files",
@@ -233,6 +233,11 @@ function runCompile() {
 
   const file = await fileHandle.getFile()
   const text = await file.text()
+    const fileName = file.name
+    fileinfo.textContent = `Opened ${fileName}`
+    setTimeout(() => {
+      fileinfo.textContent = ""
+    }, 1500)
 
   document.getElementById("input").value = text
 }

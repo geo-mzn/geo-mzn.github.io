@@ -35,7 +35,7 @@ function compile(code) {
       }
 
     }
-      // ENABLE/DELETE VARIABLES
+      // CREATE/DELETE VARIABLE TABLE
       else if (cmd === "vars") {
   const toggle = parts[1]
 
@@ -141,40 +141,39 @@ function compile(code) {
       )
     }
       // if
-      else if (cmd === "if") {
+else if (cmd === "if") {
+  if (parts.length < 6) {
+    output.push(`SYNTAX ERROR: if`)
+    continue
+  }
+
   const varname = parts[1]
   const operator = parts[2]
   const comp = parts[3]
 
-  const mccmd = parts
-    .slice(5)
-    .join(" ")
+  const mccmd = parts.slice(5).join(" ")
 
   let range = comp
 
-  if (operator === ">=") {
-    range = `${comp}..`
-  }
+  if (operator === ">=") range = `${comp}..`
+  else if (operator === "<=") range = `..${comp}`
+  else if (operator === "==" || operator === "=") range = comp
 
-  else if (operator === "<=") {
-    range = `..${comp}`
-  }
-
-  else if (operator === "==" || operator === "=") {
-    range = comp
-  } if (!mccmd || parts.length < 6) {
+  if (!mccmd) {
     output.push(`SYNTAX ERROR: if`)
-  } else {
+    continue
+  }
+
   output.push(
     `execute if score ${varname} gbmcf_vars matches ${range} run ${mccmd}`
   )
-  }
 }
         else if (cmd === "raw") {
   output.push(
     parts.slice(1).join(" ")
   )
 }
+          // moveblock
   else if (cmd === "moveblock") {
   const x = parts[1]
   const y = parts[2]
@@ -186,11 +185,11 @@ function compile(code) {
   if (parts.length < 7) {
     output.push(`SYNTAX ERROR: moveblock`)
   } else {
-    output.push(`clone ${x} ${y} ${z} ${dx} ${dy} ${dz}`)
+    output.push(`clone ${x} ${y} ${z} ${x} ${y} ${z} ${dx} ${dy} ${dz} replace`)
     output.push(`setblock ${x} ${y} ${z} air`)
   }
 }
-      else {
+      else { // error logger
         output.push(
           `SYNTAX ERROR: ${line}`
         )
@@ -212,7 +211,7 @@ function runCompile() {
   const copy =
     document.getElementById("output").textContent
 
-  if (copy === "") {
+  if (copy === "" || copy === "Type code above for an output.") {
     alert("No code compiled!")
   }
   else {
@@ -258,7 +257,29 @@ async function saveFile() {
   await writable.write(text)
   await writable.close()
 }
+async function saveMcf() {
+  const text =
+    document.getElementById("output").textContent
+
+  const fileHandle =
+    await window.showSaveFilePicker({
+      suggestedName: "gmbcf-generated.mcfunction",
+      types: [{
+        description: "MCfunction Files",
+        accept: {
+          "text/plain": [".mcfunction"]
+        }
+      }]
+    })
+
+  const writable =
+    await fileHandle.createWritable()
+
+  await writable.write(text)
+  await writable.close()
+}
   window.runCompile = runCompile
   window.getCode = getCode
 window.openFile = openFile
 window.saveFile = saveFile
+window.saveMcf = saveMcf

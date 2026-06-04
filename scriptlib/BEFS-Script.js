@@ -5,10 +5,8 @@ const input = document.getElementById("input");
 const cs = document.getElementById("console");
 
 cs.style.whiteSpace = "pre-wrap";
-input.disabled = false;
-input.readOnly = false;
 
-// input stuff
+// input and console stuff
 
 input.placeholder = "Input command here...";
 input.style.cssText = `
@@ -26,6 +24,16 @@ height: 1rem;
 opacity: 1;
 display: block;
 `;
+cs.style.cssText = `background: #0f172a;
+font-family: sans-serif;
+z-index: 254;
+position: fixed;
+display: block;
+height: calc(-4px - 1rem + 100vh);
+overflow-y: scroll;
+color: white;
+inset: 0px;
+opacity: 1;`;
 
 // watermark for some reason idk why
 

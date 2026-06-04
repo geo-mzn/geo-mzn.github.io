@@ -1,37 +1,35 @@
-function executeScript() {
+// ====================== /stop Override ======================
+function setupStopOverride() {
+    if (typeof ModAPI === "undefined" || !ModAPI.addEventListener) {
+        console.log("[BetterEaglerForgeServer] ModAPI not ready yet, retrying in 1s...");
+        setTimeout(setupStopOverride, 1000);
+        return;
+    }
 
-// elements/variables
+    ModAPI.addEventListener("sendchatmessage", function(e) {
+        const msg = (e.message || "").trim().toLowerCase();
 
-const input = document.getElementById("input");
-const cs = document.getElementById("console");
-cs.style.whiteSpace = "pre-wrap";
-  
-// check if missing elements
-if (!input || !cs) {
-  console.error("[BetterEaglerForgeServer] Required element(s) not found: input with id of 'input', or div with id of 'console'");
-  return;
-}
+        if (msg === "/stop" || msg === "stop" || msg.startsWith("/stop ")) {
+            e.preventDefault = true;     // Block default /stop
 
-// input and console stuff
+            console.log("[BEFS] /stop intercepted → Starting delayed shutdown");
 
-input.placeholder = "Input command here...";
-cs.style.cssText = `background: #0f172a;
-font-family: sans-serif;
-z-index: 254;
-position: fixed;
-display: block;
-height: calc(100vh - 1rem - 4px);
-overflow-y: scroll;
-color: white;
-inset: 0px;
-opacity: 1;`;
+            // Optional: Announce to everyone
+            if (ModAPI.sendChatMessage) {
+                ModAPI.sendChatMessage("Server shutting down in 3 seconds...");
+            }
 
-// watermark for some reason idk why
+            // Add delay (3000ms = 3 seconds)
+            setTimeout(() => {
+                if (ModAPI.executeCommand) {
+                    ModAPI.executeCommand("/kick HOST Server Shutdown");
+                } else if (ModAPI.sendChatMessage) {
+                    ModAPI.sendChatMessage("/kick HOST Server Shutdown");
+                }
+                console.log("[BEFS] Delayed kick executed");
+            }, 3000); // ← Change this number for different delay (in milliseconds)
+        }
+    });
 
-if (!cs.textContent.startsWith("# CURRENTLY USING: BetterEaglerForgeServer by Geo_mzn")) {
-    cs.textContent =
-        "# CURRENTLY USING: BetterEaglerForgeServer v1.0.0-beta by Geo_mzn\n" +
-        cs.textContent;
-}
-console.log("Thank you for using BetterEaglerForgeServer!")
+    console.log("[BetterEaglerForgeServer] /stop override hooked successfully!");
 }

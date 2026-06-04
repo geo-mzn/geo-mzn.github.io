@@ -4,13 +4,13 @@ function executeScript() {
 
 const input = document.getElementById("input");
 const cs = document.getElementById("console");
-
+cs.style.whiteSpace = "pre-wrap";
+  
 // check if missing elements
 if (!input || !cs) {
   console.error("[BetterEaglerForgeServer] Required element(s) not found: input with id of 'input', or div with id of 'console'");
   return;
 }
-cs.style.whiteSpace = "pre-wrap";
 
 // input and console stuff
 

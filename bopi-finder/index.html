@@ -30,12 +30,15 @@
         }
 
         .card {
-            margin-top: 20px;
-            display: inline-block;
-            background: #222;
-            padding: 20px;
-            border-radius: 10px;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.info {
+    flex: 1;
+}
 
         img {
             border-radius: 50%;
@@ -44,6 +47,10 @@
         a {
             color: #4da6ff;
         }
+        
+        .bopi {
+    margin-left: auto;
+}
     </style>
 </head>
 <body>
@@ -122,26 +129,27 @@
                     }
                 }
 
-                result.innerHTML = `
-                    <div class="card">
-                        <img src="${user.bopi.headshot_url}" width="128">
+result.innerHTML = `
+    <div class="card">
 
-                        <h2>${user.username}</h2>
+        <div class="info">
+            <h2>${user.username}</h2>
 
-                        <p><b>ID:</b> ${user.id}</p>
-                        <p><b>Level:</b> ${user.level}</p>
-                        <p><b>XP:</b> ${user.xp}</p>
-                        <p><b>Status:</b>
-                            ${user.online ? "🟢 Online" : "🔴 Offline"}
-                        </p>
+            <p><b>ID:</b> ${user.id}</p>
+            <p><b>Level:</b> ${user.level}</p>
+            <p><b>XP:</b> ${user.xp}</p>
+            <p><b>Status:</b> ${user.online ? "🟢 Online" : "🔴 Offline"}</p>
 
-                        <p>
-                            <a href="${user.url}" target="_blank">
-                                View Profile
-                            </a>
-                        </p>
-                    </div>
-                `;
+            <p>
+                <a href="${user.url}" target="_blank">View Profile</a>
+            </p>
+        </div>
+
+        <img src="${user.bopi?.headshot_url}" width="128">
+        <img src="${user.bopi_url}" class="bopi" width="128">
+
+    </div>
+`;
             }
             catch (err) {
                 result.innerHTML =

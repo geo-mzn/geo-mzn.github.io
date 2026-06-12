@@ -104,6 +104,12 @@
 );
 
                     user = await res.json();
+                    if (user.username === "BopiFinder") {
+                        user.username = "BopiFinder (OFFICIAL)"
+                    }
+                    else if (user.username === "GeoMzn") {
+                        user.username = "GeoMzn (BOPIFINDER CREATOR)"
+                    }
                 } else {
                     const res = await fetch(
     "https://corsproxy.io/?" +
@@ -125,7 +131,7 @@
                         user.username = "BopiFinder (OFFICIAL)"
                     }
                     else if (user.username === "GeoMzn") {
-                        user.username = "GeoMzn (BOPIMO CREATOR)"
+                        user.username = "GeoMzn (BOPIFINDER CREATOR)"
                     }
                 }
 

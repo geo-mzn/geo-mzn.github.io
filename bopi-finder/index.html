@@ -79,14 +79,20 @@
 
                 if (/^\d+$/.test(input)) {
                     const res = await fetch(
-                        `https://www.bopimo.com/api/user/${input}`
-                    );
+    "https://corsproxy.io/?" +
+    encodeURIComponent(
+        `https://www.bopimo.com/api/user/${input}`
+    )
+);
 
                     user = await res.json();
                 } else {
                     const res = await fetch(
-                        `https://www.bopimo.com/api/users?search=${encodeURIComponent(input)}`
-                    );
+    "https://corsproxy.io/?" +
+    encodeURIComponent(
+        `https://www.bopimo.com/api/users?search=${input}`
+    )
+);
 
                     const json = await res.json();
 
@@ -126,13 +132,16 @@
             }
         });
       const splashes = [
-        `omg its bopifinder v${version}!`,
-        "look its a bird",
-        "'create on midnight ONLY' 😭🙏🥀",
-        "BopiFinder by Geo_mzn, Bopimo! by Isaiah, FireCat, and Leon"
-      ]
-      const splashGen = Math.floor(Math.random() * splashes.length);
-      document.getElementById("splash").textContent = splashGen;
+    `omg its bopifinder v${version}!`,
+    "look its a bird",
+    "'create on midnight ONLY' 😭🙏🥀",
+    "BopiFinder by Geo_mzn, Bopimo! by Isaiah, FireCat, and Leon"
+];
+
+const splashGen = Math.floor(Math.random() * splashes.length);
+
+document.getElementById("splash").textContent =
+    splashes[splashGen];
     </script>
 
 </body>

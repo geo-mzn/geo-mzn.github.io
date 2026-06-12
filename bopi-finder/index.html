@@ -113,6 +113,13 @@
                     }
 
                     user = json.data[0];
+
+                    if (user.username === "BopiFinder") {
+                        user.username = "BopiFinder (OFFICIAL)"
+                    }
+                    else if (user.username === "GeoMzn") {
+                        user.username = "GeoMzn (BOPIMO CREATOR)"
+                    }
                 }
 
                 result.innerHTML = `

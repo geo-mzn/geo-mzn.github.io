@@ -1,75 +1,76 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Geo's Better MCF</title>
-  <script src="https://geo-mzn.github.io/scriptlib/gbmcf.js" defer></script>
-  <style>
-    body {
-      font-family: Arial;
-      background: #111827;
-      color: white;
-      padding: 20px;
-    }
+  <head>
+    <title>Geo's Better MCF</title>
+    <script src="https://geo-mzn.github.io/scriptlib/gbmcf.js" defer></script>
+    <style>
+      body {
+        font-family: Arial;
+        background: #111827;
+        color: white;
+        padding: 20px;
+      }
 
-    textarea {
-      width: 100%;
-      height: 250px;
-      background: #1f2937;
-      color: white;
-      border: none;
-      padding: 10px;
-      font-family: monospace;
-      margin-bottom: 15px;
-    }
+      textarea {
+        width: 100%;
+        height: 250px;
+        background: #1f2937;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-family: monospace;
+        margin-bottom: 15px;
+      }
 
-    button {
-      padding: 10px 20px;
-      cursor: pointer;
-    }
+      button {
+        padding: 10px 20px;
+        cursor: pointer;
+      }
 
-    pre {
-      background: #1f2937;
-      padding: 10px;
-      white-space: pre-wrap;
-    }
-  </style>
-</head>
+      pre {
+        background: #1f2937;
+        padding: 10px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
 
-<div>
-  <h1 style="text-align:center;">
-  Geo's Better MCF
-  </h1>
-  <button onclick="openCmds()">
-      Commands
-    </button>
-</div>
-  <div id="fileNameDisplay"></div>
+    <div>
+      <h1 style="text-align:center;">
+        Geo's Better MCF
+      </h1>
+      <button onclick="openCmds()">
+        Commands
+      </button>
+    </div>
+    <div id="fileNameDisplay"></div>
 
-<textarea id="input" placeholder='Type Code Here...'></textarea>
+    <textarea id="input" placeholder='Type Code Here...'></textarea>
 
-<div style="text-align:center;"><button onclick="runCompile()">
-Compile
-</button></div>
+    <div style="text-align:center;">
+      <button onclick="runCompile()">
+        Compile
+      </button>
+    </div>
 
-<h2 style="text-align:center;">Compiled Output</h2>
+    <h2 style="text-align:center;">Compiled Output</h2>
 
-  <pre id="output">Type code above for an output.</pre>
+    <pre id="output">Type code above for an output.</pre>
 
-  <div style="text-align:center;"><button onclick="getCode()">Copy Code</button></div>
+    <div style="text-align:center;"><button onclick="getCode()">Copy Code</button></div>
 
-  <div style="text-align:center;">
-    <h2>Export/Import Options</h2><br>
-    <button onclick="openFile()">Open .gbmcf</button>
-    <button onclick="saveFile()">Save as .gbmcf</button>
-    <button onclick="saveMcf()">Save as .mcfunction</button>
-  </div>
-<script>
-function openCmds() {
-  window.location.href = "cmds.html"
-}
-</script>
-
-</body>
+    <div style="text-align:center;">
+      <h2>Export/Import Options</h2><br>
+      <button onclick="openFile()">Open .gbmcf</button>
+      <button onclick="saveFile()">Save as .gbmcf</button>
+      <button onclick="saveMcf()">Save as .mcfunction</button>
+    </div>
+    <script for stuffs>
+      function openCmds() {
+        window.location.href = "cmds.html"
+      }
+    </script>
+  </body>
 </html>
